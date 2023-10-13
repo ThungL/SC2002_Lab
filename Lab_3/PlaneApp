@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class PlaneApp {
 
 	public static void main(String[] args) {
+		Plane plane = new Plane();
+		
 		int choice;
 		Scanner sc = new Scanner(System.in);
 		do {
@@ -19,22 +21,31 @@ public class PlaneApp {
 		
 		switch (choice) {
 			case 1: /* showNumEmptySeats() */
-				Plane.showNumEmptySeats;
+				plane.showNumEmptySeats();
 				break;
 			case 2: /* showEmptySeats() */				
-				
+				plane.showEmptySeats();
 				break;
 			case 3: /* showAssignedSeat - bySeatId true */
-				
+				plane.showAssignedSeats(true);
 				break;
 			case 4: /* showAssignedSeat - bySeatId false */
-				
+				plane.showAssignedSeats(false);
 				break;
-			case 5: /* assignSeat(int seatId, int cust_id) */
-				
+			case 5: /* assignSeat(in t seatId, in t cust_id) */
+				System.out.println("Assigning seat ..");
+				System.out.println("Please enter SeatID: ");
+				int seatId = sc.nextInt();
+				System.out.println("Please enter SeatID: ");
+				int cust_id = sc.nextInt();
+				plane.assignSeat(seatId, cust_id);
+				System.out.println("Seat Assigned!");
 				break;
-			case 6: /* unAssignSeat(int seatId) */
-				
+			case 6: /* unAssignSeat(in t seatId) */
+				System.out.println("Enter SeatID to unassign customer from: ");
+				int case6_seatId = sc.nextInt();
+				plane.unAssignSeat(case6_seatId);
+				System.out.println("Seat Unassigned!");
 				break;
 			case 7: System.out.println("");
 		}
