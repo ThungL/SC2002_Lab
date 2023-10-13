@@ -1,7 +1,9 @@
 package lab3;
-import 
 
-public class Plane {
+import java.util.Comparator;
+import java.util.Arrays;
+
+public class Plane{
 	
 	private PlaneSeat[] seat = new PlaneSeat[12];
 	private int numEmptySeat = 12; //why not static?
@@ -9,7 +11,19 @@ public class Plane {
 	public Plane() {} // can omit?
 	
 	private PlaneSeat[] sortSeats() {
-		//write later
+		PlaneSeat[] copied = new PlaneSeat[12];
+		copied = Arrays.copyOf(seat, seat.length);
+		Arrays.sort(copied, Comparator.nullsLast(Comparator.comparingInt(PlaneSeat::getCustomerID)));
+		
+		return copied;
+	}
+	
+	private PlaneSeat[] sortSeatsbyseatID() {
+		PlaneSeat[] copied = new PlaneSeat[12];
+		copied = Arrays.copyOf(seat, seat.length);
+		Arrays.sort(copied, Comparator.nullsLast(Comparator.comparingInt(PlaneSeat::getSeatID)));
+		
+		return copied;
 	}
 	
 	public void showNumEmptySeats() {
@@ -18,19 +32,39 @@ public class Plane {
 	
 	public void showEmptySeats() {
 		System.out.println("The following seats are empty:");
+		for (int i = 0; i < seat.length; i++) {
+			if (seat[i].isOccupied() == false) {
+				System.out.printf("SeatID &d", seat[i].getSeatID());
+			}
+		}
 	}
 	
 	public void showAssignedSeats(boolean bySeatID) {
 		System.out.println("The seat assignments are as follow:");
-		
+		PlaneSeat[] sorted = new PlaneSeat[12];
+		if (bySeatID == true) {
+			sorted = sortSeatsbyseatID();
+			for (int i = 0; i < seat.length; i++) {
+				if (sorted[i].isOccupied()== true) {
+					System.out.printf("SeatID %d assigned to CustomerID %d.", sorted[i].getSeatID(), sorted[i].getCustomerID());
+				}
+			}
+		} else if (bySeatID == false) {
+			sorted = sortSeats();
+			for (int i = 0; i < seat.length; i++) {
+				if (sorted[i].isOccupied()== true) {
+					System.out.printf("SeatID %d assigned to CustomerID %d.", sorted[i].getSeatID(), sorted[i].getCustomerID());
+				}
+			}
+		}
 	}
 	
 	public void assignSeat(int seatID, int cust_id) {
-		
+		seat[seatID].assign(cust_id);
 	}
 	
 	public void unAssignSeat(int seatID) {
-		
+		seat[seatID].unAssign();
 	}
 	
 }
