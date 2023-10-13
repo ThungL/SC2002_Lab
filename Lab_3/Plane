@@ -1,0 +1,36 @@
+package lab3;
+import 
+
+public class Plane {
+	
+	private PlaneSeat[] seat = new PlaneSeat[12];
+	private int numEmptySeat = 12; //why not static?
+	
+	public Plane() {} // can omit?
+	
+	private PlaneSeat[] sortSeats() {
+		//write later
+	}
+	
+	public void showNumEmptySeats() {
+		System.out.printf("There are %d empty seats\n", numEmptySeat);
+	}
+	
+	public void showEmptySeats() {
+		System.out.println("The following seats are empty:");
+	}
+	
+	public void showAssignedSeats(boolean bySeatID) {
+		System.out.println("The seat assignments are as follow:");
+		
+	}
+	
+	public void assignSeat(int seatID, int cust_id) {
+		
+	}
+	
+	public void unAssignSeat(int seatID) {
+		
+	}
+	
+}
