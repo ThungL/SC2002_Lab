@@ -33,8 +33,13 @@ public class Plane{
 	public void showEmptySeats() {
 		System.out.println("The following seats are empty:");
 		for (int i = 0; i < seat.length; i++) {
+			if (seat[i] == null) {
+				seat[i] = new PlaneSeat(i+1);
+				seat[i].unAssign();
+			}
 			if (seat[i].isOccupied() == false) {
-				System.out.printf("SeatID &d", seat[i].getSeatID());
+				System.out.printf("SeatID ");
+				System.out.println(seat[i].getSeatID());
 			}
 		}
 	}
@@ -42,29 +47,52 @@ public class Plane{
 	public void showAssignedSeats(boolean bySeatID) {
 		System.out.println("The seat assignments are as follow:");
 		PlaneSeat[] sorted = new PlaneSeat[12];
+		for (int i = 0; i < seat.length; i++) {
+			if (sorted[i] == null) {
+				sorted[i] = new PlaneSeat(i+1);	
+			}	
+		}
 		if (bySeatID == true) {
 			sorted = sortSeatsbyseatID();
 			for (int i = 0; i < seat.length; i++) {
-				if (sorted[i].isOccupied()== true) {
-					System.out.printf("SeatID %d assigned to CustomerID %d.", sorted[i].getSeatID(), sorted[i].getCustomerID());
+				if (sorted[i] == null) {
+					sorted[i] = new PlaneSeat(i+1);
+					sorted[i].unAssign();
 				}
+				if (sorted[i].isOccupied()== true) {
+					System.out.printf("SeatID %d assigned to CustomerID %d.\n", sorted[i].getSeatID(), sorted[i].getCustomerID());
+				}	
 			}
 		} else if (bySeatID == false) {
 			sorted = sortSeats();
 			for (int i = 0; i < seat.length; i++) {
+				if (sorted[i] == null) {
+					sorted[i] = new PlaneSeat(i+1);
+					sorted[i].unAssign();
+				}
 				if (sorted[i].isOccupied()== true) {
-					System.out.printf("SeatID %d assigned to CustomerID %d.", sorted[i].getSeatID(), sorted[i].getCustomerID());
+					System.out.printf("SeatID %d assigned to CustomerID %d.\n", sorted[i].getSeatID(), sorted[i].getCustomerID());
 				}
 			}
 		}
 	}
 	
 	public void assignSeat(int seatID, int cust_id) {
-		seat[seatID].assign(cust_id);
+		if (seat[seatID - 1] == null) {
+		seat[seatID - 1] = new PlaneSeat(seatID);
+		}
+		if (seat[seatID - 1].isOccupied() == false) {
+			seat[seatID - 1].assign(cust_id);
+			numEmptySeat = numEmptySeat - 1;
+			System.out.println("Seat Assigned!");
+		} else {
+			System.out.println("Seat already assigned to a customer.");
+		}
 	}
 	
 	public void unAssignSeat(int seatID) {
-		seat[seatID].unAssign();
+		seat[seatID - 1].unAssign();
+		numEmptySeat = numEmptySeat + 1;
 	}
 	
 }
